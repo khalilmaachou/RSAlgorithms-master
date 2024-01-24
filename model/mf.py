@@ -1,6 +1,7 @@
 #encoding:utf-8
 import  sys
 sys.path.append("..")
+sys.path.append("./")
 
 import numpy as np
 import matplotlib.pylab as plt

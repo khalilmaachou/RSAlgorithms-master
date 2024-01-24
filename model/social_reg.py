@@ -8,6 +8,7 @@ from reader.trust import TrustGetter
 from utility.matrix import SimMatrix
 from utility.similarity import pearson_sp, cosine_sp
 from utility import util
+from utility.cross_validation import split_5_folds
 
 
 class SocialReg(MF):
@@ -101,6 +102,7 @@ if __name__ == '__main__':
     rmses = []
     maes = []
     tcsr = SocialReg()
+    split_5_folds(tcsr.config)
     # print(bmf.rg.trainSet_u[1])
     for i in range(tcsr.config.k_fold_num):
         print('the %dth cross validation training' % i)
