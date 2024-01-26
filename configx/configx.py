@@ -19,8 +19,8 @@ class ConfigX(object):
         self.sep = ' '  # the separator of rating and trust data in triple tuple
         self.random_state = 0  # the seed of random number
         self.size = 0.8  # the ratio of train set
-        self.min_val = 0.5  # the minimum rating value
-        self.max_val = 4.0  # the maximum rating value
+        self.min_val = 1.0  # the minimum rating value
+        self.max_val = 5.0  # the maximum rating value
 
         # Model HyperParameter
         self.coldUserRating = 5  # the number of ratings a cold start user rated on items

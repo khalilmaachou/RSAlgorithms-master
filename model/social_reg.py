@@ -1,5 +1,6 @@
 # encoding:utf-8
 import sys
+import time
 
 sys.path.append("..")
 import numpy as np
@@ -91,7 +92,6 @@ class SocialReg(MF):
             iteration += 1
             if self.isConverged(iteration):
                 break
-
 
 if __name__ == '__main__':
     # srg = SocialReg()
