@@ -33,26 +33,37 @@ class SocialReg(MF):
         super(SocialReg, self).init_model(k)
         from collections import defaultdict
         print('constructing user-user similarity matrix node2vec ...')
-
+        
+        #Création du graphe
+        #On parcourt tous les utilisateurs pour ajouter les noeuds
         graph = nx.Graph()
         for u in self.rg.user:
             graph.add_node(u)
+            #On parcourt les abonnés de l'utilisateur "u"
             for f in self.tg.get_followees(u):
                 graph.add_edge(u, f)
-       
+        #Entrainement du modèle Node2Vec
+        #On initialise le modèle puis on l'ajuste aux données du graphe
         node2vec = Node2Vec(graph, dimensions=64, walk_length=30, num_walks=100, p=1, q=1)
         model = node2vec.fit(window=10, min_count=1, batch_words=4)
+        #Extraction des embeddings
         node_embeddings = model.wv
 
         num_nodes = len(node_embeddings.vectors)
+        #Construction de la matrice de similarité
         self.user_sim = SimMatrix()
         for i, u in enumerate(self.rg.user):
+            #récupération de l'index de l'utilisateur "u" dans les embeddings
             indexu = node_embeddings.get_index(str(u))
             for j, f in enumerate(self.tg.get_followees(u)):
+                #récupération de l'index de l'abonné "f" dans les embeddings
                 indexf = node_embeddings.get_index(str(f))
+                #On vérifie si la similarité entre u et f a déja été calculée
                 if self.user_sim.contains(u, f):
                     continue
+                #On calcule la similarité cosinus entre les embeddings de "u" et "f"
                 sim = node_embeddings.similarity(node_embeddings.index_to_key[indexu], node_embeddings.index_to_key[indexf])
+                #On enregistre la similarité dans la matrice de similarité
                 self.user_sim.set(u, f, sim)
         # util.save_data(self.user_sim,'../data/sim/ft_cf_soreg08.pkl')
 
