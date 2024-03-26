@@ -7,7 +7,7 @@ import numpy as np
 from mf import MF
 from reader.trust import TrustGetter
 from utility.matrix import SimMatrix
-from utility.similarity import pearson_sp, cosine_sp
+from utility.similarity import pearson_sp
 from utility import util
 from utility.cross_validation import split_5_folds
 
@@ -38,8 +38,7 @@ class SocialReg(MF):
             for f in self.tg.get_followees(u):
                 if self.user_sim.contains(u, f):
                     continue
-                sim = self.get_sim(u, f)
-                self.user_sim.set(u, f, sim)
+                self.user_sim.set(u, f, 1)
 
         
 

@@ -7,7 +7,7 @@ import numpy as np
 from mf import MF
 from reader.trust import TrustGetter
 from utility.matrix import SimMatrix
-from utility.similarity import pearson_sp, cosine_sp
+from utility.similarity import pearson_sp
 from utility import util
 from utility.cross_validation import split_5_folds
 
